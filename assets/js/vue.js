@@ -104,15 +104,6 @@ const Home = {
         this.getLikeCookie;
     }
 
-
-    //
-    //
-    //
-    //
-    //   ,
-    //
-    // },
-
 }
 const UserSettings = {
     // template: '<h1>User Settings</h1>'
