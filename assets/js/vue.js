@@ -14,7 +14,7 @@ const products = [
     {id: 12, description: 'Mesh Genova', price: 6, img: 'assets/img/mesh-genova.JPG'},
 ];
 
-const Home =  {
+const Home = {
     template: '#home',
     // template: '<h2>HomePage</h2>',
     name: 'Home',
@@ -38,6 +38,20 @@ const Home =  {
             cookieValue == null ? this.liked = [] : this.liked = cookieValue
             console.log(this.liked)
         },
+        cartTotalAmount(){
+                 let total = 0;
+                 for (let item in this.cart){
+                   total = total + (this.cart[item].quantity * this.cart[item].price)
+                 }
+                 return total;
+               },
+        itemTotalAmount(){
+                 let itemTotal = 0;
+                 for (let item in this.cart){
+                   itemTotal = itemTotal + (this.cart[item].quantity);
+                 }
+                 return itemTotal;
+               }
     },
     methods: {
         setLikeCookie() {
@@ -47,33 +61,43 @@ const Home =  {
                 }, 300);
             })
         },
-        addToCart(product){
+        addToCart(product) {
             //     // check if already in array
-               for (let i = 0; i < this.cart.length; i++){
-                   if (this.cart[i].id === product.id) {
-                     return this.cart[i].quantity++
-                   }
-                 }
-                 this.cart.push({
-                   id: product.id,
-                   img: product.img,
-                   description: product.description,
-                   price: product.price,
-                   quantity: 1
-                 })
-              },
-        cartPlusOne(product){
-                 product.quantity = product.quantity + 1;
-               },
-               cartMinusOne(product, id){
-                 if (product.quantity == 1) {
-                   this.cartRemoveItem(id);
-                 } else {
-                   product.quantity = product.quantity -1;
-                 }
-               },
-               cartRemoveItem(id){
-                this.$delete(this.cart, id)
+            for (let i = 0; i < this.cart.length; i++) {
+                if (this.cart[i].id === product.id) {
+                    return this.cart[i].quantity++
+                }
+            }
+            this.cart.push(
+                {
+                    id: product.id,
+                    img: product.img,
+                    description: product.description,
+                    price: product.price,
+                    quantity: 1
+                }
+            )
+            /*if (this.cart.length > 2) {
+                console.log(this.cart[2]);
+            }*/
+        },
+        cartPlusOne(product) {
+            product.quantity = product.quantity + 1;
+        },
+        cartMinusOne(product, id) {
+            if (product.quantity == 1) {
+                //console.log(this.cart);
+                 this.cartRemoveItem(id);
+            } else {
+                product.quantity = product.quantity - 1;
+            }
+        },
+        cartRemoveItem(id) {
+            if(confirm('supprimer?')){
+                if (id !== -1) {
+                    this.cart.splice(id, 1)
+                }
+            }
         }
     },
     mounted: () => {
@@ -83,21 +107,8 @@ const Home =  {
 
     //
     //
-    //   cartTotalAmount(){
-    //     let total = 0;
-    //     for (let item in this.cart){
-    //       total = total + (this.cart[item].quantity * this.cart[item].price)
-    //     }
-    //     return total;
-    //   },
-    //   itemTotalAmount(){
-    //     let itemTotal = 0;
-    //     for (let item in this.cart){
-    //       itemTotal = itemTotal + (this.cart[item].quantity);
-    //     }
-    //     return itemTotal;
-    //   }
-    // },
+    //
+    //
     //   ,
     //
     // },

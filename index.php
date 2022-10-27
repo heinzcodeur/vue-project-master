@@ -87,7 +87,7 @@
 <!--    <le-chiffre v-for="item in number" v-bind:chiffre="item" v-bind:key="item.id"></le-chiffre>-->
 <!--</div>-->
 <div id="app">
-    <nav>
+    <nav style="margin-top: -21px">
         <!--        <todo-item></todo-item>-->
         <div class="nav-container">
             <div id="logo">
@@ -117,7 +117,7 @@
         </div>
 
     </nav>
-    <br><br><br><br>
+    <br>
 
     <router-view></router-view>
 </div>
@@ -136,49 +136,45 @@
             <h3 style="color:red">Désolé</h3>
             <p style="color:darkred">Aucun résultat trouvé</p>
         </div>
+
+        <!--list results-->
         <div v-if="searchKey && filteredList.length >= 1 ">{{ filteredList.length }} résultat<span
                     v-if="filteredList.length >= 2">s</span>
 
             <!--card-display-->
-        <div class="card-cart-container">
-            <div class="card-container">
-                <div v-for="product in filteredList" class="card">
+            <div class="card-cart-container">
+                <div class="card-container">
+                    <div v-for="product in filteredList" class="card">
 
-                    <div class="img-container">
-                        <img v-bind:src="product.img" alt="">
-                    </div>
-                    <div class="card-text">
-                        <h3>{{ product.description}}</h3>
-                        <span>{{ product.price }}€</span>
-                    </div>
-                    <div class="card-icons">
-                        <div class="like-container">
-                            <input type="checkbox" :value=product.id name="checkbox" v-bind:id="product.id"
-                                   v-model="liked" @click="setLikeCookie()"/>
-                            <label v-bind:for="product.id"><i class="fas fa-heart"></i></label>
+                        <div class="img-container">
+                            <img v-bind:src="product.img" alt="">
                         </div>
+                        <div class="card-text">
+                            <h3>{{ product.description}}</h3>
+                            <span>{{ product.price }}€</span>
+                        </div>
+                        <div class="card-icons">
+                            <div class="like-container">
+                                <input type="checkbox" :value=product.id name="checkbox" v-bind:id="product.id"
+                                       v-model="liked" @click="setLikeCookie()"/>
+                                <label v-bind:for="product.id"><i class="fas fa-heart"></i></label>
+                            </div>
 
-                        <div class="add-to-cart">
-                            <button v-on:click="addToCart(product)">
-                                <i class="fas fa-shopping-cart"></i>
-                            </button>
+                            <div class="add-to-cart">
+                                <button v-on:click="addToCart(product)">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-
-        </div>
-
-    </div>
 
                 <!--cart display-->
-                <!--div v-if="cart.length > 0" class="shopping-cart" id="shopping-cart">
+                <div v-if="cart.length > 0" class="shopping-cart" id="shopping-cart">
                     <h2>Panier</h2>
 
                     <div class="item-group">
-                        <div v-for="product in cart" class="item">
-
+                        <div v-for="product, id in cart" v-bind:key="product.id" class="item">
                             <div class="img-container">
                                 <img v-bind:src="product.img" alt="">
                             </div>
@@ -189,20 +185,41 @@
                             </div>
 
                             <div class="item-quantity">
-                                <h6>{{ product.quantity }}</h6>
-                            </div>
+                                <h6>quantité : {{ product.quantity }}</h6>
 
-                            <div class="cart-icons">
-                                <button>
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                                <button>
-                                    <i class="fa fa-minus"></i>
-                                </button>
+                                <div class="cart-icons">
+                                    <button @click="cartPlusOne(product)">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                    <button @click="cartMinusOne(product, id)">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                    <button @click="cartRemoveItem(id)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
                             </div>
-
                         </div>
-                    </div-->
+
+                        <div class="grand-total">
+                            <div class="total">
+                                <h2>Total</h2>
+                                <h2>{{ cartTotalAmount }} €</h2>
+                            </div>
+                            <h6>Total articles : {{ itemTotalAmount }}</h6>
+                        </div>
+
+                    </div>
+
+
+                    <!--div class="item-quantity">
+                        <h6>{{ product.quantity }}</h6>
+                    </div>
+
+
+
+                </div>
+            </div-->
 
 
 </script>
@@ -218,300 +235,294 @@
 <!--&lt;!&ndash;              {{filteredList.length}} resultat<span v-if="filteredList.length >= 2">s</span>&ndash;&gt;-->
 <!--&lt;!&ndash;            </span>&ndash;&gt;-->
 
-           <!--cards display>
+<!--cards display>
 <div class="card-cart-container">
-    <div class="card-container">
-        <div v-for="product in filteredList" class="card">
-            <div v-for="product in products" class="card"-->
+<div class="card-container">
+<div v-for="product in filteredList" class="card">
+ <div v-for="product in products" class="card"-->
 
-                <!--                        <div class="img-container">-->
-                <!--                            <img v-bind:src='product.img'/>-->
-                <!--                        </div>-->
+<!--                        <div class="img-container">-->
+<!--                            <img v-bind:src='product.img'/>-->
+<!--                        </div>-->
 
-                <!--                        <div class="card-text">-->
-                <!--                            <h3>{{ product.description }}</h3>-->
-                <!--                            <span>{{ product.price }}€</span>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-
-
-                <!--                    <div class="card-icons">-->
-                <!--                            <div class="like-container">-->
-                <!--                                <input-->
-                <!--                                        type="checkbox"-->
-                <!--                                        :value=product.id-->
-                <!--                                        name="checkbox"-->
-                <!--                                        v-bind:id="product.id"-->
-                <!--                                        v-model="liked"-->
-                <!--                                        @click="setLikeCookie()"-->
-                <!--                                />-->
-                <!--                                <label v-bind:for="product.id">-->
-                <!--                                    <i class="fas fa-heart"></i>-->
-                <!--                                </label>-->
-                <!--                            </div>-->
-
-                <!--                            <div class="add-to-cart">-->
-                <!--                                <button v-on:click="addToCart(product)">-->
-                <!--                                    <i class="fas fa-shopping-cart"></i>-->
-                <!--                                </button>-->
-                <!--                            </div>-->
-                <!--                    </div>-->
-                <!--                </div>-->
-                <!--            </div>-->
-
-                <!--                    &lt;!&ndash; no result message &ndash;&gt;-->
-                <!--&lt;!&ndash;                    <div v-if="filteredList.length == []" class="no-result">&ndash;&gt;-->
-                <!--&lt;!&ndash;                        <h3>Désolé</h3>&ndash;&gt;-->
-                <!--&lt;!&ndash;                        <p>Aucun résultat trouvé</p>&ndash;&gt;-->
-                <!--&lt;!&ndash;                    </div>&ndash;&gt;-->
-                <!--                &lt;!&ndash; {{liked}} &ndash;&gt;-->
-
-                <!--                &lt;!&ndash; cart display &ndash;&gt;-->
-                <!--&lt;!&ndash;                <transition name="cart-anim">&ndash;&gt;-->
-                <!--&lt;!&ndash;                    <div v-if="cart.length > 0" class="shopping-cart" id="shopping-cart">&ndash;&gt;-->
-                <!--&lt;!&ndash;                        <h2>Panier</h2>&ndash;&gt;-->
-
-                <!--&lt;!&ndash;                        <transition-group name="item-anim" tag="div" class="item-group">&ndash;&gt;-->
-                <!--&lt;!&ndash;                            <div v-for="product, id in cart" class="item" v-bind:key="product.id">&ndash;&gt;-->
-
-                <!--&lt;!&ndash;                                <div class="img-container">&ndash;&gt;-->
-                <!--&lt;!&ndash;                                    <img v-bind:src='product.img'/>&ndash;&gt;-->
-                <!--&lt;!&ndash;                                </div>&ndash;&gt;-->
-
-                <!--&lt;!&ndash;                                <div class="item-description">&ndash;&gt;-->
-                <!--&lt;!&ndash;                                    <h4>{{ product.description }}</h4>&ndash;&gt;-->
-                <!--&lt;!&ndash;                                    <p>{{ product.price }}€</p>&ndash;&gt;-->
-                <!--&lt;!&ndash;                                </div>&ndash;&gt;-->
-
-                <!--&lt;!&ndash;                                <div class="item-quantity">&ndash;&gt;-->
-                <!--&lt;!&ndash;                                    <h6>quantité : {{ product.quantity }}</h6>&ndash;&gt;-->
-
-                <!--&lt;!&ndash;                                    <div class="cart-icons">&ndash;&gt;-->
-                <!--&lt;!&ndash;                                        <button v-on:click="cartPlusOne(product)">&ndash;&gt;-->
-                <!--&lt;!&ndash;                                            <i class="fa fa-plus"></i>&ndash;&gt;-->
-                <!--&lt;!&ndash;                                        </button>&ndash;&gt;-->
-                <!--&lt;!&ndash;                                        <button v-on:click="cartMinusOne(product, id)">&ndash;&gt;-->
-                <!--&lt;!&ndash;                                            <i class="fa fa-minus"></i>&ndash;&gt;-->
-                <!--&lt;!&ndash;                                        </button>&ndash;&gt;-->
-                <!--&lt;!&ndash;                                        <button @click="cartRemoveItem(id)">&ndash;&gt;-->
-                <!--&lt;!&ndash;                                            <i class="fa fa-trash"></i>&ndash;&gt;-->
-                <!--&lt;!&ndash;                                        </button>&ndash;&gt;-->
-                <!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
-                <!--&lt;!&ndash;                                </div>&ndash;&gt;-->
-                <!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-                <!--&lt;!&ndash;                        </transition-group>&ndash;&gt;-->
-
-                <!--&lt;!&ndash;                        <div class="grand-total">&ndash;&gt;-->
-                <!--&lt;!&ndash;                            <div class="total">&ndash;&gt;-->
-                <!--&lt;!&ndash;                                <h2>Total</h2>&ndash;&gt;-->
-                <!--&lt;!&ndash;                                <h2>{{ cartTotalAmount }} €</h2>&ndash;&gt;-->
-                <!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-                <!--&lt;!&ndash;                            <h6>Total articles : {{ itemTotalAmount }}</h6>&ndash;&gt;-->
-                <!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-                <!--&lt;!&ndash;                        <div class="order-button">&ndash;&gt;-->
-                <!--&lt;!&ndash;                            <button>Commander</button>&ndash;&gt;-->
-                <!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-                <!--&lt;!&ndash;                    </div>&ndash;&gt;-->
-                <!--&lt;!&ndash;                </transition>&ndash;&gt;-->
-                <!--                </div>-->
-                <!--</script>-->
-
-                <script src="assets/js/jquery.min.js"></script>
-                <!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
-                <!--    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>-->
-                <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-                <script src="https://unpkg.com/vue-router@4"></script>
-                <script src="https://unpkg.com/vue-cookies@1.8.1/vue-cookies.js"></script>
-                <script src="./assets/js/vue.js" type="text/javascript"></script>
-                <script src="./assets/js/script.js"></script>
+<!--                        <div class="card-text">-->
+<!--                            <h3>{{ product.description }}</h3>-->
+<!--                            <span>{{ product.price }}€</span>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
 
-                <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/4.1.5/vue-router.cjs.js"-->
-                <!--        integrity="sha512-hihdghOhvUKO3Tv3BEBKYvRDPJvNWZemo1EkKMb2PmB+bNrvoX6JUntgoTMJ/3mayxtCQ6J95V41Dvv4LeET8A=="-->
-                <!--        crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+<!--                    <div class="card-icons">-->
+<!--                            <div class="like-container">-->
+<!--                                <input-->
+<!--                                        type="checkbox"-->
+<!--                                        :value=product.id-->
+<!--                                        name="checkbox"-->
+<!--                                        v-bind:id="product.id"-->
+<!--                                        v-model="liked"-->
+<!--                                        @click="setLikeCookie()"-->
+<!--                                />-->
+<!--                                <label v-bind:for="product.id">-->
+<!--                                    <i class="fas fa-heart"></i>-->
+<!--                                </label>-->
+<!--                            </div>-->
+
+<!--                            <div class="add-to-cart">-->
+<!--                                <button v-on:click="addToCart(product)">-->
+<!--                                    <i class="fas fa-shopping-cart"></i>-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--                    &lt;!&ndash; no result message &ndash;&gt;-->
+<!--&lt;!&ndash;                    <div v-if="filteredList.length == []" class="no-result">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <h3>Désolé</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <p>Aucun résultat trouvé</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--                &lt;!&ndash; {{liked}} &ndash;&gt;-->
+
+<!--                &lt;!&ndash; cart display &ndash;&gt;-->
+<!--&lt;!&ndash;                <transition name="cart-anim">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div v-if="cart.length > 0" class="shopping-cart" id="shopping-cart">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <h2>Panier</h2>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <transition-group name="item-anim" tag="div" class="item-group">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <div v-for="product, id in cart" class="item" v-bind:key="product.id">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                                <div class="img-container">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <img v-bind:src='product.img'/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                                <div class="item-description">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <h4>{{ product.description }}</h4>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <p>{{ product.price }}€</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                                <div class="item-quantity">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <h6>quantité : {{ product.quantity }}</h6>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                                    <div class="cart-icons">&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <button v-on:click="cartPlusOne(product)">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <i class="fa fa-plus"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </button>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <button v-on:click="cartMinusOne(product, id)">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <i class="fa fa-minus"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </button>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <button @click="cartRemoveItem(id)">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <i class="fa fa-trash"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </button>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </transition-group>&ndash;&gt;-->
+
+<!--&lt;!&ndash;
+<!--&lt;!&ndash;                        <div class="order-button">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <button>Commander</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                </transition>&ndash;&gt;-->
+<!--                </div>-->
+<!--</script>-->
+
+<script src="assets/js/jquery.min.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+<!--    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>-->
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://unpkg.com/vue-router@4"></script>
+<script src="https://unpkg.com/vue-cookies@1.8.1/vue-cookies.js"></script>
+<script src="./assets/js/vue.js" type="text/javascript"></script>
+<script src="./assets/js/script.js"></script>
 
 
-                <!--<script>-->
-
-                <!--   //  const Compteur = {-->
-                <!--   //      data() {-->
-                <!--   //          return {-->
-                <!--   //              compteur: 0-->
-                <!--   //          }-->
-                <!--   //      },-->
-                <!--   //      mounted() {-->
-                <!--   //          setInterval(() => {-->
-                <!--   //              this.compteur++-->
-                <!--   //          }, 1000)-->
-                <!--   //      }-->
-                <!--   //  }-->
-                <!--   //-->
-                <!--   //  Vue.createApp(Compteur).mount('#counter')-->
-                <!--   //-->
-                <!--   //  const b = {-->
-                <!--   //      data() {-->
-                <!--   //          return {-->
-                <!--   //              message: 'Vous avez chargez cette page le ' + new Date().toLocaleString()-->
-                <!--   //          }-->
-                <!--   //      }-->
-                <!--   //  }-->
-                <!--   //-->
-                <!--   //  Vue.createApp(b).mount('#bind-attribute');-->
-                <!--   //-->
-                <!--   //  const EventHandling = {-->
-                <!--   //      data() {-->
-                <!--   //          return {-->
-                <!--   //              message: 'Hello Vue.js!'-->
-                <!--   //          }-->
-                <!--   //      },-->
-                <!--   //      methods: {-->
-                <!--   //          reverseMessage() {-->
-                <!--   //              this.message = this.message-->
-                <!--   //                  .split('')-->
-                <!--   //                  .reverse()-->
-                <!--   //                  .join('')-->
-                <!--   //          }-->
-                <!--   //      }-->
-                <!--   //  }-->
-                <!--   //-->
-                <!--   //  Vue.createApp(EventHandling).mount('#event-handling')-->
-                <!--   //-->
-                <!--   //  const TwoWayBinding = {-->
-                <!--   //      data() {-->
-                <!--   //          return {-->
-                <!--   //              message: 'Hello Vue!'-->
-                <!--   //          }-->
-                <!--   //      }-->
-                <!--   //  }-->
-                <!--   //-->
-                <!--   //  Vue.createApp(TwoWayBinding).mount('#two-way-binding')-->
-                <!--   //-->
-                <!--   //  const ConditionalRendering = {-->
-                <!--   //      data() {-->
-                <!--   //          return {-->
-                <!--   //              seen: 0-->
-                <!--   //          }-->
-                <!--   //      }-->
-                <!--   //  }-->
-                <!--   //-->
-                <!--   //  Vue.createApp(ConditionalRendering).mount('#conditional-rendering')-->
-                <!--   //-->
-                <!--   //  const ListRendering = {-->
-                <!--   //      data() {-->
-                <!--   //          return {-->
-                <!--   //              todos: [-->
-                <!--   //                  { text: 'Apprendre Python' },-->
-                <!--   //                  { text: 'Apprendre Vue' },-->
-                <!--   //                  { text: 'Créer quelque chose de génial' }-->
-                <!--   //              ]-->
-                <!--   //          }-->
-                <!--   //      }-->
-                <!--   //  }-->
-                <!--   //-->
-                <!--   //  Vue.createApp(ListRendering).mount('#list-rendering')-->
-                <!--   //-->
-                <!--   //  // Créer une application Vue-->
-                <!--   //  //const app = Vue.createApp(codeur)-->
-                <!--   //-->
-                <!--   //  const TodoList = {-->
-                <!--   //      data() {-->
-                <!--   //          return {-->
-                <!--   //              groceryList: [-->
-                <!--   //                  { id: 0, text: 'Légumes' },-->
-                <!--   //                  { id: 1, text: 'Fromage' },-->
-                <!--   //                  { id: 2, text: 'Tout ce que les humains sont censés manger' }-->
-                <!--   //              ]-->
-                <!--   //          }-->
-                <!--   //      }-->
-                <!--   //  }-->
-                <!--   //-->
-                <!--   //-->
-                <!--   //  Vue.createApp(TodoList).mount("#todo-list-app")-->
-                <!--   //-->
-                <!--   //-->
-                <!--   // const app = Vue.createApp(TodoList)-->
-                <!--   //-->
-                <!--   // app.component('todo-item', {-->
-                <!--   //     props: ['todo'],-->
-                <!--   //     template: `<li>{{ todo.text }}</li>`-->
-                <!--   // })-->
-                <!--   //-->
-                <!--   // app.mount('#todo-list-app')-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/4.1.5/vue-router.cjs.js"-->
+<!--        integrity="sha512-hihdghOhvUKO3Tv3BEBKYvRDPJvNWZemo1EkKMb2PmB+bNrvoX6JUntgoTMJ/3mayxtCQ6J95V41Dvv4LeET8A=="-->
+<!--        crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
 
 
-                <!--   const TodoList = {-->
-                <!--       data() {-->
-                <!--           return {-->
-                <!--               groceryList: [-->
-                <!--                   { id: 0, text: 'Légumes' },-->
-                <!--                   { id: 1, text: 'Fromage' },-->
-                <!--                   { id: 2, text: 'Tout ce que les humains sont censés manger' }-->
-                <!--               ]-->
-                <!--           }-->
-                <!--       }-->
-                <!--   }-->
+<!--<script>-->
 
-                <!--   const app = Vue.createApp(TodoList)-->
+<!--   //  const Compteur = {-->
+<!--   //      data() {-->
+<!--   //          return {-->
+<!--   //              compteur: 0-->
+<!--   //          }-->
+<!--   //      },-->
+<!--   //      mounted() {-->
+<!--   //          setInterval(() => {-->
+<!--   //              this.compteur++-->
+<!--   //          }, 1000)-->
+<!--   //      }-->
+<!--   //  }-->
+<!--   //-->
+<!--   //  Vue.createApp(Compteur).mount('#counter')-->
+<!--   //-->
+<!--   //  const b = {-->
+<!--   //      data() {-->
+<!--   //          return {-->
+<!--   //              message: 'Vous avez chargez cette page le ' + new Date().toLocaleString()-->
+<!--   //          }-->
+<!--   //      }-->
+<!--   //  }-->
+<!--   //-->
+<!--   //  Vue.createApp(b).mount('#bind-attribute');-->
+<!--   //-->
+<!--   //  const EventHandling = {-->
+<!--   //      data() {-->
+<!--   //          return {-->
+<!--   //              message: 'Hello Vue.js!'-->
+<!--   //          }-->
+<!--   //      },-->
+<!--   //      methods: {-->
+<!--   //          reverseMessage() {-->
+<!--   //              this.message = this.message-->
+<!--   //                  .split('')-->
+<!--   //                  .reverse()-->
+<!--   //                  .join('')-->
+<!--   //          }-->
+<!--   //      }-->
+<!--   //  }-->
+<!--   //-->
+<!--   //  Vue.createApp(EventHandling).mount('#event-handling')-->
+<!--   //-->
+<!--   //  const TwoWayBinding = {-->
+<!--   //      data() {-->
+<!--   //          return {-->
+<!--   //              message: 'Hello Vue!'-->
+<!--   //          }-->
+<!--   //      }-->
+<!--   //  }-->
+<!--   //-->
+<!--   //  Vue.createApp(TwoWayBinding).mount('#two-way-binding')-->
+<!--   //-->
+<!--   //  const ConditionalRendering = {-->
+<!--   //      data() {-->
+<!--   //          return {-->
+<!--   //              seen: 0-->
+<!--   //          }-->
+<!--   //      }-->
+<!--   //  }-->
+<!--   //-->
+<!--   //  Vue.createApp(ConditionalRendering).mount('#conditional-rendering')-->
+<!--   //-->
+<!--   //  const ListRendering = {-->
+<!--   //      data() {-->
+<!--   //          return {-->
+<!--   //              todos: [-->
+<!--   //                  { text: 'Apprendre Python' },-->
+<!--   //                  { text: 'Apprendre Vue' },-->
+<!--   //                  { text: 'Créer quelque chose de génial' }-->
+<!--   //              ]-->
+<!--   //          }-->
+<!--   //      }-->
+<!--   //  }-->
+<!--   //-->
+<!--   //  Vue.createApp(ListRendering).mount('#list-rendering')-->
+<!--   //-->
+<!--   //  // Créer une application Vue-->
+<!--   //  //const app = Vue.createApp(codeur)-->
+<!--   //-->
+<!--   //  const TodoList = {-->
+<!--   //      data() {-->
+<!--   //          return {-->
+<!--   //              groceryList: [-->
+<!--   //                  { id: 0, text: 'Légumes' },-->
+<!--   //                  { id: 1, text: 'Fromage' },-->
+<!--   //                  { id: 2, text: 'Tout ce que les humains sont censés manger' }-->
+<!--   //              ]-->
+<!--   //          }-->
+<!--   //      }-->
+<!--   //  }-->
+<!--   //-->
+<!--   //-->
+<!--   //  Vue.createApp(TodoList).mount("#todo-list-app")-->
+<!--   //-->
+<!--   //-->
+<!--   // const app = Vue.createApp(TodoList)-->
+<!--   //-->
+<!--   // app.component('todo-item', {-->
+<!--   //     props: ['todo'],-->
+<!--   //     template: `<li>{{ todo.text }}</li>`-->
+<!--   // })-->
+<!--   //-->
+<!--   // app.mount('#todo-list-app')-->
 
-                <!--   app.component('todo-item', {-->
-                <!--       props: ['todo'],-->
-                <!--       template: `<li>{{ todo.text }}</li>`-->
-                <!--   })-->
 
-                <!--   app.mount('#todo-list-app')-->
+<!--   const TodoList = {-->
+<!--       data() {-->
+<!--           return {-->
+<!--               groceryList: [-->
+<!--                   { id: 0, text: 'Légumes' },-->
+<!--                   { id: 1, text: 'Fromage' },-->
+<!--                   { id: 2, text: 'Tout ce que les humains sont censés manger' }-->
+<!--               ]-->
+<!--           }-->
+<!--       }-->
+<!--   }-->
 
+<!--   const app = Vue.createApp(TodoList)-->
 
-                <!--   const Composant = {-->
-                <!--       data(){-->
-                <!--           return {-->
-                <!--               number : [-->
-                <!--                   45,-->
-                <!--                   55,-->
-                <!--                   83,-->
-                <!--                   74-->
-                <!--               ]-->
-                <!--           }-->
-                <!--       }-->
-                <!--   }-->
-                <!--   const compo = Vue.createApp(Composant)-->
+<!--   app.component('todo-item', {-->
+<!--       props: ['todo'],-->
+<!--       template: `<li>{{ todo.text }}</li>`-->
+<!--   })-->
 
-                <!--   compo.component('le-chiffre',{-->
-                <!--       props:['chiffre'],-->
-                <!--       template: `<h5>{{ chiffre }}</h5>`-->
-                <!--   })-->
-
-                <!--   compo.mount('#lecomposant')-->
+<!--   app.mount('#todo-list-app')-->
 
 
-                <!--    // Définir un nouveau composant appelé todo-item-->
-                <!--    // app2.component('todo-item', {-->
-                <!--    //     props: ['todo'],-->
-                <!--    //     template: `<li>{{ todo.text }}</li>`-->
-                <!--    // })-->
-                <!--    //-->
-                <!--    // // Monter l'application Vue-->
-                <!--    // app2.mount("#app")-->
+<!--   const Composant = {-->
+<!--       data(){-->
+<!--           return {-->
+<!--               number : [-->
+<!--                   45,-->
+<!--                   55,-->
+<!--                   83,-->
+<!--                   74-->
+<!--               ]-->
+<!--           }-->
+<!--       }-->
+<!--   }-->
+<!--   const compo = Vue.createApp(Composant)-->
+
+<!--   compo.component('le-chiffre',{-->
+<!--       props:['chiffre'],-->
+<!--       template: `<h5>{{ chiffre }}</h5>`-->
+<!--   })-->
+
+<!--   compo.mount('#lecomposant')-->
 
 
-                <!--    // app.component('todo-item', {-->
-                <!--    //     props: ['todo'],-->
-                <!--    //     template: `<li>{{ todo.text }}</li>`-->
-                <!--    // })-->
-                <!--    //-->
-                <!--    // app.mount('#todo-list-app')-->
-
-                <!--   const app2 = Vue.createApp({-->
-                <!--       data() {-->
-                <!--           return { count: 4 }-->
-                <!--       }-->
-                <!--   })-->
-
-                <!--   const vm = app2.mount('#app')-->
-
-                <!--   console.log(vm.count)-->
+<!--    // Définir un nouveau composant appelé todo-item-->
+<!--    // app2.component('todo-item', {-->
+<!--    //     props: ['todo'],-->
+<!--    //     template: `<li>{{ todo.text }}</li>`-->
+<!--    // })-->
+<!--    //-->
+<!--    // // Monter l'application Vue-->
+<!--    // app2.mount("#app")-->
 
 
-                <!--</script>-->
+<!--    // app.component('todo-item', {-->
+<!--    //     props: ['todo'],-->
+<!--    //     template: `<li>{{ todo.text }}</li>`-->
+<!--    // })-->
+<!--    //-->
+<!--    // app.mount('#todo-list-app')-->
+
+<!--   const app2 = Vue.createApp({-->
+<!--       data() {-->
+<!--           return { count: 4 }-->
+<!--       }-->
+<!--   })-->
+
+<!--   const vm = app2.mount('#app')-->
+
+<!--   console.log(vm.count)-->
+
+
+<!--</script>-->
 
 </body>
 </html>
